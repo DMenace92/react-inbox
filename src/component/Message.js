@@ -1,8 +1,12 @@
 import React from 'react'
-const Message = ({message})=>{
+const Message = ({
+     message,
+     userStarredMessage,
+     userSelectedMessage,
+     userReadMessage})=>{
     let labelList= message.labels.map((label, index)=>{
         return(
-            <span className="label label-warning">{label }</span>
+            <span key ={index} className="label label-warning">{label }</span>
 
         )
     })
@@ -11,18 +15,22 @@ const Message = ({message})=>{
         <div className="col-xs-1">
           <div className="row">
             <div className="col-xs-2">
-              <input type="checkbox" checked={message.selected}/>
+              <input type="checkbox" checked={message.selected}
+              onchange={()=> userSelectedMessage(message)}
+                />
             </div>
             <div className="col-xs-2">
-              <i className={`star fa fa-star${message.starred ? '': '-o'}`}></i>
+              <i className={`star fa fa-star${message.starred ? '': '-o'}`} 
+              onClick={()=>userStarredMessage(message)}></i>
             </div>
           </div>
         </div>
-        <div className="col-xs-11">
-   
+        <div className="col-xs-11"
+        onClick={()=> userReadMessage(message)}
+        >
          {labelList}
           <a href="#">
-            Here is some message text that has a bunch of stuff
+           {message.subject}
           </a>
         </div>
       </div>
